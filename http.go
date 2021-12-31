@@ -1,7 +1,6 @@
 package pipekit
 
 import (
-	"net/http"
 	"net/url"
 )
 
@@ -10,17 +9,13 @@ type Params struct {
 	Values url.Values
 }
 
+// GetParams returns a params struct so that any structs that inherit params
+// will conform to the ParamsContainer interface
+func (p *Params) GetParams() *Params {
+	return p
+}
+
 // ParamsContainer allows backend invokers to configure parameters
 type ParamsContainer interface {
 	GetParams() *Params
-}
-
-// ResponseSetter allows backend invokers to configure the api response
-type ResponseSetter interface {
-	SetResponse(response *APIResponse)
-}
-
-// APIResponse houses the standard golang http response plus some added info
-type APIResponse struct {
-	http.Response
 }
